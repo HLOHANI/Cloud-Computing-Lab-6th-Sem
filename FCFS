@@ -1,0 +1,48 @@
+//FCFS
+//CODE by HIMANSHU LOHANI on 07/01/2022
+//CC Lab1
+#include<stdio.h>
+int main()
+{
+    int numOfProcess; 
+    printf("Enter total number of processes -> ");
+    scanf("%d",&numOfProcess);
+    printf("\n");
+    int burstTime[numOfProcess],waitTime[numOfProcess],turnAroundTime[numOfProcess],avgWaitTime=0,avgTurnAroundTime=0,i,j;
+ 
+    printf("\nEnter Process Burst Time\n");
+    for(i=0;i<numOfProcess;i++)
+    {
+        printf("P[%d]:",i+1);
+        scanf("%d",&burstTime[i]);
+    }
+ 
+    waitTime[0]=0;    //waiting time for first process is 0
+ 
+    //calculating waiting time
+    for(i=1;i<numOfProcess;i++)
+    {
+        waitTime[i]=0;
+        for(j=0;j<i;j++)
+            waitTime[i]+=burstTime[j];
+    }
+
+    printf("-------------------------------------------------------------");
+    printf("\nProcess\t\tBurst Time\tWaiting Time\tTurnAround Time");
+ 
+    //calculating turnaround time
+    for(i=0;i<numOfProcess;i++)
+    {
+        turnAroundTime[i]=burstTime[i]+waitTime[i];
+        avgWaitTime+=waitTime[i];
+        avgTurnAroundTime+=turnAroundTime[i];
+        printf("\nP[%d]\t\t\t%d\t\t\t%d\t\t\t\t%d",i+1,burstTime[i],waitTime[i],turnAroundTime[i]);
+    }
+ 
+    avgWaitTime/=i;
+    avgTurnAroundTime/=i;
+    printf("\n\nAverage Waiting Time -> %d",avgWaitTime);
+    printf("\nAverage Turnaround Time -> %d",avgTurnAroundTime);
+ 
+    return 0;
+}
