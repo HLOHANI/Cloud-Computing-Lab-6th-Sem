@@ -1,0 +1,57 @@
+//SJF Pre-emptive
+//CODE by HIMANSHU LOHANI on 07/01/2022
+//CC Lab1
+#include <stdio.h>
+int main() 
+{
+      int arrTime[10], burstTime[10], temp[10];
+
+      int i, smallest, count = 0, time, limit;
+
+      double waitTime = 0, turnAroundTime = 0, end;
+
+      float avgWaitTime, avgTurnaroundTime;
+
+      printf("\nEnter the Total Number of Processes -> ");
+      scanf("%d", &limit); 
+
+      printf("\nEnter Details of %d Processes\n", limit);
+      for(i = 0; i < limit; i++)
+      {
+            printf("\nEnter Arrival Time of Proccess %d -> ",i+1);
+            scanf("%d", &arrTime[i]);
+            printf("Enter Burst Time of Proccess %d -> ",i+1);
+            scanf("%d", &burstTime[i]); 
+            temp[i] = burstTime[i];
+      }
+
+
+      burstTime[9] = 9999;  
+
+      for(time = 0; count != limit; time++)
+      {
+            smallest = 9;
+            for(i = 0; i < limit; i++)
+            {
+                  if(arrTime[i] <= time && burstTime[i] < burstTime[smallest] && burstTime[i] > 0)
+                  {
+                        smallest = i;
+                  }
+            }
+            burstTime[smallest]--;
+            if(burstTime[smallest] == 0)
+            {
+                  count++;
+                  end = time + 1;
+                  waitTime = waitTime + end - arrTime[smallest] - temp[smallest];
+                  turnAroundTime = turnAroundTime + end - arrTime[smallest];
+            }
+      }
+
+      avgWaitTime = waitTime / limit; 
+      avgTurnaroundTime = turnAroundTime / limit;
+
+      printf("\n\nAverage Waiting Time:\t%lf\n", avgWaitTime);
+      printf("Average Turnaround Time:\t%lf\n", avgTurnaroundTime);
+      return 0;
+}
